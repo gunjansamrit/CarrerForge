@@ -1,0 +1,28 @@
+1) 	path="/admin/registerCompany"
+	body={companyName,contactEmail,companyCity,username,passwordd,role}
+
+2) 	path="/company/createJob"
+	body={companyId,jobData{jobTitle,description,degreeReq,cgpaReq}}
+	degreeReq=String
+
+3) 	path="/company/getAllJobsByCompanyId"
+	body={companyId}
+
+4)	path="/company/publishEligible"
+	body={jobId}
+
+5)	path="/company/changeCgpa"
+	body={jobId,cgpa}
+
+
+6)	path="/student/getAllJobs"
+	GET
+
+7) 	path="student/applyForJob"
+	body={studentId,jobId}
+
+8) 	path="student/findAllApplicationsWithJobDetails"
+	body={studentId}
+
+9)	path="/company/getTopScorer"
+	body={jobId,criteria}

@@ -1,0 +1,106 @@
+/* Styles for StudentPage component */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.card {
+    width: 600px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 30px;
+}
+
+.profile-details {
+    margin-bottom: 30px;
+}
+
+.profile-details p {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 18px;
+}
+
+.btn-edit-details {
+    margin-top: 30px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit-details:hover {
+    background-color: #0056b3;
+}
+
+.job-list {
+    margin-top: 50px;
+}
+
+.job-item {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.job-item:hover {
+    transform: translateY(-5px);
+}
+
+.job-item h5 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 24px;
+}
+
+.job-item p {
+    margin-bottom: 0;
+    color: #666;
+    font-size: 18px;
+}
+
+.form-control {
+    margin-bottom: 30px;
+    padding: 15px;
+    font-size: 18px;
+}
+
+.btn-apply {
+    width: 150px;
+    color: #fff;
+    background-color: #ff6b6b;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-apply:hover {
+    background-color: #ff4d4d;
+}
