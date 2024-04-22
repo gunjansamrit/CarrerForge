@@ -1,0 +1,15 @@
+E11000 duplicate key error collection: carrerforge.credentials index: username_1 dup key: { username: "mirn" } /admin/registercompany POST
+invalid signature undefined undefined
+invalid signature undefined undefined
+invalid signature /admin/registercompany POST
+invalid signature /admin/registercompany POST
+invalid signature /admin/registercompany POST
+invalid signature /admin/registercompany POST
+invalid signature /admin/registercompany POST
+invalid signature /admin/registercompany POST
+E11000 duplicate key error collection: carrerforge.credentials index: username_1 dup key: { username: "mrn" } /admin/registercompany POST
+Unexpected token '"', "
+  
+  "questionD"... is not valid JSON /company/uploadQuestion POST
+Expected double-quoted property name in JSON at position 369 (line 8 column 1) /student/cppTest GET
+Expected double-quoted property name in JSON at position 370 (line 8 column 1) /student/cppTest GET
