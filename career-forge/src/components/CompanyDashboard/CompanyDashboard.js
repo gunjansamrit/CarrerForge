@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./CompanyDashboard.css";
-import editIcon from "./edit-icon.svg";
-import searchIcon from "./search-icon.svg";
-
-// Reusable components
+import searchIcon from "../../resources/icons/search-icon.svg";
+import JobPosting from "./JobPosting";
+import JobDetails from "./JobDetails";
+import ApplicantList from "./ApplicantsList";
 const ProfileCard = ({ student, onClose }) => (
   <div className="profile-card-modal">
     <div className="profile-header">
@@ -24,39 +24,6 @@ const ProfileCard = ({ student, onClose }) => (
     <button className="close-btn" onClick={onClose}>
       Close
     </button>
-  </div>
-);
-
-const JobPosting = ({
-  title,
-  company,
-  location,
-  applicants,
-  handleViewApplicants,
-}) => (
-  <div className="job-listing">
-    <h4>{title}</h4>
-    <p>Company: {company}</p>
-    <p>Location: {location}</p>
-    <button onClick={() => handleViewApplicants(applicants)}>
-      View Applicants
-    </button>
-  </div>
-);
-
-const ApplicantList = ({ applicants, handleViewProfile }) => (
-  <div className="applicant-list">
-    <h3>Applicants</h3>
-    <ul>
-      {applicants.map((applicant) => (
-        <li key={applicant.email} onClick={() => handleViewProfile(applicant)}>
-          <div className="applicant-info">
-            <p>{applicant.name}</p>
-            <p>{applicant.degree}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
   </div>
 );
 
@@ -105,15 +72,27 @@ const Company = () => {
   const [isAddingJob, setIsAddingJob] = useState(false);
   const [showApplicantModal, setShowApplicantModal] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
-  const [applicantsToView, setApplicantsToView] = useState([]);
+  const [selectedJobApplicants, setSelectedJobApplicants] = useState([]);
 
   const handleAddJob = () => {
     setIsAddingJob(true);
     // Add logic to handle job posting form
   };
+  const calculateEligibility = (applicant) => {
+    if (applicant.name == "Jane Smith") {
+      return true;
+    }
+    return false;
+  };
+  const calculateEligibleApplicants = (applicants) => {
+    return applicants.filter(calculateEligibility).length;
+  };
+  const handleViewJobDetails = (applicants) => {
+    setSelectedJobApplicants(applicants);
+  };
 
-  const handleViewApplicants = (applicants) => {
-    setApplicantsToView(applicants);
+  const handleViewApplicants = () => {
+    // No need to do anything here as the applicant list is already set in handleViewJobDetails
   };
 
   const handleViewProfile = (applicant) => {
@@ -161,15 +140,34 @@ const Company = () => {
               company={job.company}
               location={job.location}
               applicants={job.applicants}
-              handleViewApplicants={handleViewApplicants}
+              handleViewJobDetails={handleViewJobDetails}
             />
           ))}
         </div>
+        <div className="job-details-view">
+          {selectedJobApplicants.length > 0 ? (
+            <JobDetails
+              title={selectedJobApplicants[0].title}
+              company={selectedJobApplicants[0].company}
+              location={selectedJobApplicants[0].location}
+              applicants={selectedJobApplicants}
+              handleViewApplicants={handleViewApplicants}
+              calculateEligibility={calculateEligibility}
+              calculateEligibleApplicants={calculateEligibleApplicants}
+            />
+          ) : (
+            <div className="no-job-selected">
+              <p>Click on a job posting to view details</p>
+            </div>
+          )}
+        </div>
         <div className="applicant-view">
-          {applicantsToView.length > 0 && (
+          {selectedJobApplicants.length > 0 && (
             <ApplicantList
-              applicants={applicantsToView}
+              applicants={selectedJobApplicants}
               handleViewProfile={handleViewProfile}
+              calculateEligibility={calculateEligibility}
+              calculateEligibleApplicants={calculateEligibleApplicants}
             />
           )}
         </div>

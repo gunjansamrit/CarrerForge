@@ -346,3 +346,126 @@
     display: flex;
     justify-content: space-between;
   }
+
+  /* App.css */
+
+/* ... (previous styles) */
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.job-postings {
+  flex: 1;
+}
+
+.job-details-view {
+  flex: 1;
+}
+
+.job-listing {
+  cursor: pointer;
+}
+
+.job-details {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* App.css */
+
+/* ... (previous styles) */
+
+.job-details {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.job-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.job-details-meta {
+  text-align: right;
+}
+
+.job-details-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.job-details-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.job-details-btn {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+  margin: 0 5px;
+}
+
+/* App.css */
+
+/* ... (previous styles) */
+
+.job-details-header {
+  margin-bottom: 20px;
+}
+
+.job-details-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.job-details-skills {
+  margin-bottom: 20px;
+}
+
+.job-skill {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.applicant-item {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.applicant-item.eligible {
+  background-color: rgba(0, 128, 0, 0.1);
+}
+
+.applicant-item.ineligible {
+  background-color: rgba(255, 0, 0, 0.1);
+}

@@ -1,53 +1,124 @@
 import React, { useState } from "react";
-import StudentDetails from "./StudentDetails";
-import JobListings from "./JobListings";
 import "./StudentDashboard.css";
-
-const StudentPage = () => {
-  const [studentDetails] = useState({
+import StudentDetails from "./StudentDetails";
+import JobListing from "./JobListings";
+import searchIcon from "../../resources/icons/search-icon.svg";
+const Student = () => {
+  const [student, setStudent] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
-    gpa: 3.8,
-    // Add more student details as needed
+    degree: "Bachelor of Science in Computer Science",
+    skills: ["React", "JavaScript", "Node.js", "Python"],
+    profileImage: "https://via.placeholder.com/150",
+    isEditMode: false,
   });
 
-  const [jobOpenings] = useState([
-    { id: 1, position: "Software Engineer Intern", company: "ABC Corp" },
-    { id: 2, position: "Data Analyst", company: "XYZ Ltd" },
-    // Add more job openings as needed
+  const [jobListings, setJobListings] = useState([
+    {
+      id: 1,
+      title: "Software Engineer",
+      company: "ABC Tech",
+      location: "San Francisco, CA",
+    },
+    {
+      id: 2,
+      title: "Front-End Developer",
+      company: "XYZ Corp",
+      location: "New York, NY",
+    },
+    {
+      id: 3,
+      title: "Full-Stack Developer",
+      company: "Acme Inc.",
+      location: "Seattle, WA",
+    },
   ]);
 
-  const [filteredJobs, setFilteredJobs] = useState([...jobOpenings]);
-
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    const filtered = jobOpenings.filter(
-      (job) =>
-        job.position.toLowerCase().includes(searchTerm) ||
-        job.company.toLowerCase().includes(searchTerm)
-    );
-    setFilteredJobs(filtered);
-  };
+  const [searchTerm, setSearchTerm] = useState("");
+  const [newSkill, setNewSkill] = useState("");
 
   const handleApply = (jobId) => {
-    // Add logic to handle job application
-    console.log("Applied to job:", jobId);
+    console.log(`Applying for job ${jobId}`);
   };
 
+  const handleEditProfile = () => {
+    setStudent((prevStudent) => ({
+      ...prevStudent,
+      isEditMode: !prevStudent.isEditMode,
+    }));
+  };
+
+  const handleProfileChange = (field, value) => {
+    setStudent((prevStudent) => ({
+      ...prevStudent,
+      [field]: value,
+    }));
+  };
+
+  const handleAddSkill = () => {
+    if (newSkill.trim()) {
+      setStudent((prevStudent) => ({
+        ...prevStudent,
+        skills: [...prevStudent.skills, newSkill.trim()],
+      }));
+      setNewSkill("");
+    }
+  };
+
+  const filteredJobListings = jobListings.filter(
+    (job) =>
+      job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      job.company.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="container py-4">
-      <div className="row">
-        <div className="col">
-          <StudentDetails details={studentDetails} />
+    <div className="app">
+      <header className="header">
+        <h1>Student Dashboard</h1>
+      </header>
+      <div className="container">
+        <div className="profile">
+          <StudentDetails
+            student={student}
+            handleEditProfile={handleEditProfile}
+            handleProfileChange={handleProfileChange}
+          />
+          {student.isEditMode && (
+            <div className="add-skill">
+              <input
+                type="text"
+                placeholder="Add a new skill"
+                value={newSkill}
+                onChange={(e) => setNewSkill(e.target.value)}
+              />
+              <button onClick={handleAddSkill}>Add Skill</button>
+            </div>
+          )}
         </div>
-      </div>
-      <div className="row mt-4">
-        <div className="col">
-          <JobListings jobs={filteredJobs} handleApply={handleApply} />
+        <div className="job-listings">
+          <div className="search-bar">
+            <img src={searchIcon} alt="Search" className="search-icon" />
+            <input
+              type="text"
+              placeholder="Search job listings..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <h2>Job Listings</h2>
+          {filteredJobListings.map((job) => (
+            <JobListing
+              key={job.id}
+              title={job.title}
+              company={job.company}
+              location={job.location}
+              applyHandler={() => handleApply(job.id)}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default StudentPage;
+export default Student;
