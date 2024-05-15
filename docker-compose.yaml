@@ -1,3 +1,4 @@
+version: '3.2'
 services:
   frontend:
     image: "sumith783/career-forge-frontend:latest"
