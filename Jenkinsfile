@@ -121,7 +121,7 @@ pipeline {
                     // sh 'docker-compose pull'
                     // sh 'docker-compose up -d'  # Start all services in docker-compose.yml
                     // Specify the configuration folder based on environment variable or logic
-                    sh "docker-compose -f docker-compose.yaml up -d  frontend" //mention all space seperated
+                    sh "docker-compose up -d" //mention all space seperated
                 }
             }
         }

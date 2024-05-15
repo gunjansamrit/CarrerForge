@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   frontend:
     image: "sumith783/career-forge-frontend:latest"
@@ -6,16 +8,6 @@ services:
       - "80:3000"
     networks:
       - frontend-nw
-
-
-  # admin-service:
-  #   image: "sumith783/career-forge-AdminService:latest"
-  #   container_name: admin-service
-  #   ports:
-  #     - "8071:3001"
-  #   extends:
-  #     file: common-config.yaml
-  #     service: microservice-base-config
 
 networks:
   frontend-nw:
