@@ -5,7 +5,7 @@ services:
     ports:
       - "80:3000"
     networks:
-      - frontend
+      - frontend-nw
 
 
   # admin-service:
@@ -18,5 +18,5 @@ services:
   #     service: microservice-base-config
 
 networks:
-  frontend:
+  frontend-nw:
     driver: bridge
