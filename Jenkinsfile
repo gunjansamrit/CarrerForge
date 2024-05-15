@@ -67,9 +67,11 @@ pipeline {
                 script {
 //                     sh "ansible-playbook -i localhost ansible/build-backend-images.yaml -e docker_username=anuragbabal"
 //                     sh "ansible-playbook -i localhost ansible/build-frontend-image.yaml -e docker_username=anuragbabal"
-                    for (microservice in microservices) {
-                        docker.build("${microservice}", "${microservice}")
-                    }
+                    // for (microservice in microservices) {
+                    // }
+                    docker.build("login", "Login")
+                    docker.build("admin", "AdminService")
+                    docker.build("company", "CompanyService")
                     docker.build('frontend', 'career-forge')
                 }
             }
@@ -96,10 +98,16 @@ pipeline {
                         // sh "docker login -u your-username -p \$DOCKER_PASSWORD"
                         docker.withRegistry('', 'DockerHubCred') {
                             // Loop through backend and frontend images to push
-                            for (microservice in microservices) {
-                                sh "docker tag ${microservice} ${env.DOCKER_IMAGE_PREFIX}-${microservice}:latest"
-                                sh "docker push ${env.DOCKER_IMAGE_PREFIX}-${microservice}:latest"
-                            }
+                            // for (microservice in microservices) {
+                            //     sh "docker tag ${microservice} ${env.DOCKER_IMAGE_PREFIX}-${microservice}:latest"
+                            //     sh "docker push ${env.DOCKER_IMAGE_PREFIX}-${microservice}:latest"
+                            // }
+                            sh "docker tag login ${env.DOCKER_IMAGE_PREFIX}-login:latest"
+                            sh "docker push ${env.DOCKER_IMAGE_PREFIX}-login:latest"
+                            sh "docker tag company ${env.DOCKER_IMAGE_PREFIX}-company:latest"
+                            sh "docker push ${env.DOCKER_IMAGE_PREFIX}-company:latest"
+                            sh "docker tag admin ${env.DOCKER_IMAGE_PREFIX}-admin:latest"
+                            sh "docker push ${env.DOCKER_IMAGE_PREFIX}-admin:latest"
                             sh "docker tag frontend ${env.DOCKER_IMAGE_PREFIX}-frontend:latest"
                             sh "docker push ${env.DOCKER_IMAGE_PREFIX}-frontend:latest"
                         }
