@@ -19,7 +19,8 @@ const Login = ({ onLogin }) => {
       role: role,
     };
     let roleUrl = role.charAt(0).toLowerCase() + role.slice(1);
-    // console.log(role);
+    // let roleUrl = "Student";
+    // console.log(reqBody);
     try {
       const response = await axios.post(
         "http://" + "localhost" + ":" + "3009" + "/" + roleUrl + "/login",
