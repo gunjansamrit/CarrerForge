@@ -18,14 +18,15 @@ const Login = ({ onLogin }) => {
       password: password,
       role: role,
     };
-    console.log(reqBody);
+    let roleUrl = role.charAt(0).toLowerCase() + role.slice(1);
+    // console.log(role);
     try {
       const response = await axios.post(
-        "http://" + "192.168.0.113" + ":" + "3000" + "/admin/login",
+        "http://" + "localhost" + ":" + "3009" + "/" + roleUrl + "/login",
         reqBody
       );
       // const responseData = response.json();
-      console.log(response.data.token);
+      // console.log(response.data.token);
     } catch (error) {
       console.log(error);
     }
