@@ -13,7 +13,7 @@ const port = 3009;
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: true,
     credentials: true, // Include this if you're using cookies or sessions
   })
 );
