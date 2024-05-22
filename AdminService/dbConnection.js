@@ -1,6 +1,10 @@
 // Using Node.js `require()`
 const mongoose = require('mongoose');
-const DB_URL=process.env.DB_URL;
+const fs = require('fs');
+const yaml = require('yaml');
+const file = fs.readFileSync('/etc/config/config.yaml', 'utf8');
+const config = yaml.parse(file);
+const DB_URL=config.mongodb.uri;
 
   (async()=>{
    
