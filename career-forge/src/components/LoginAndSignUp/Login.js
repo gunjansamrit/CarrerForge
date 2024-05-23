@@ -24,14 +24,11 @@ const Login = ({ onLogin }) => {
     try {
       const response = await axios.post(
         // "http://" + "login-service" + ":" + "3009" + "/" + roleUrl + "/login",
-        "http://login-service.default.svc.cluster.local:3009" +
-          "/" +
-          roleUrl +
-          "/login",
+        "http://careerforge.backend.com/login" + "/" + roleUrl + "/login",
         reqBody
       );
       // const responseData = response.json();
-      // console.log(response.data.token);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
