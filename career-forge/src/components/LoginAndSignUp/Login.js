@@ -23,7 +23,11 @@ const Login = ({ onLogin }) => {
     // console.log(reqBody);
     try {
       const response = await axios.post(
-        "http://" + "login-service" + ":" + "3009" + "/" + roleUrl + "/login",
+        // "http://" + "login-service" + ":" + "3009" + "/" + roleUrl + "/login",
+        "http://login-service.default.svc.cluster.local:3009" +
+          "/" +
+          roleUrl +
+          "/login",
         reqBody
       );
       // const responseData = response.json();
