@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const { generateToken,verifyToken } = require('../utils/jwtToken'); // Import JWT token utility function
 const CredentialsModel = require('./ credentialsModel');
 const CompanyModel = require('./companyModel');
+const { sendEmail } = require('../utils/nodeMailer');
 
 const adminSchema = new Schema({
   credentials: { type: Schema.Types.ObjectId, ref: 'Credentials', required: true }, // Reference to CredentialsModel
@@ -70,6 +71,8 @@ adminSchema.statics.registerCompany = async function (req, res, next) {
     const company = await CompanyModel.create(companyData);
     admin.registeredCompanyName = companyData.companyName; // Update the registered company name for the admin
     await admin.save(); // Save the changes to the admin document
+    await sendEmail('companyData.contactEmail', 'Your Account Details', `The registration of your company is successfull \n Find the below Credentials\n\nUsername: ${companyData.username}\nPassword: ${password}`);
+    // companyData.contactEmail
 
     res.status(200).send("Company Registration Successful");
    
