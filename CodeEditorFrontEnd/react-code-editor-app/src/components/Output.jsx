@@ -11,6 +11,7 @@ const Output = ({
   questionText,
   sampleTestCase,
   questionId,
+  setIsAuthenticated,
 }) => {
   const toast = useToast();
   const [output, setOutput] = useState([]);
@@ -19,6 +20,9 @@ const Output = ({
   const [isSuccess, setIsSuccess] = useState(false);
   const [compilationError, setCompilationError] = useState("");
   const [outputMap, setOutputMap] = useState({});
+
+  const studentId = localStorage.getItem("studentId");
+  const jobId = localStorage.getItem("jobId");
 
   useEffect(() => {
     // Clear output when question ID changes
@@ -54,7 +58,7 @@ const Output = ({
         {
           questionId: questionId,
           solutionCode: {
-            studentId: "661a3ee85712d4e0491fcbe1",
+            studentId: studentId,
             solutionCode: sourceCode,
           },
         }
@@ -116,7 +120,7 @@ const Output = ({
           questionId: questionId,
 
           solutionCode: {
-            studentId: "661973001005930ca2558f99",
+            studentId: studentId,
             solutionCode: sourceCode,
           },
         }
@@ -152,6 +156,41 @@ const Output = ({
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const finish = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `http://localhost:3003/student/finishCode`,
+        {
+          studentId: studentId,
+          jobId: jobId, // Assuming jobId is equivalent to questionId
+        }
+      );
+
+      if (response.status !== 200) {
+        throw new Error("Failed to mark attempt as true.");
+      }
+
+      toast({
+        title: "Success",
+        description: "Attempt marked as true successfully.",
+        status: "success",
+        duration: 6000,
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "An error occurred.",
+        description: error.message || "Unable to mark attempt as true",
+        status: "error",
+        duration: 6000,
+      });
+    } finally {
+      setIsLoading(false);
+      setIsAuthenticated(false);
     }
   };
 
@@ -221,7 +260,7 @@ const Output = ({
             colorScheme="green"
             mb={4}
             isLoading={isLoading}
-            onClick={runCode}
+            onClick={finish}
           >
             Finish
           </Button>

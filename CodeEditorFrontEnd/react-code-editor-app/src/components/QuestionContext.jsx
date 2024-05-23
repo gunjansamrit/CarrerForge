@@ -12,6 +12,7 @@ const QuestionProvider = ({ children }) => {
   const [sampleTestCase, setSampleTestCase] = useState([]);
   const [questionId, setQuestionId] = useState('');
   const [codeChanges, setCodeChanges] = useState({});
+  const [studentId, setStudentId] = useState('');
 
 
 
@@ -26,6 +27,7 @@ const QuestionProvider = ({ children }) => {
       sampleTestCase, setSampleTestCase ,
       questionId,setQuestionId,
       codeChanges, setCodeChanges,
+      studentId,setStudentId
 
     }}>
       {children}

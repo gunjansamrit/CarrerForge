@@ -1,0 +1,61 @@
+/* src/App.css */
+
+.body{
+
+    color:black!important;
+
+}
+.login-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    height:466px;
+    margin-top: 200px;
+    margin-left: 550px;
+}
+
+.login-container h2 {
+    
+    margin-bottom: 20px;
+    text-align: center;
+    color: black;
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: black;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0 !important;
+    color:black!important;
+}
+.login-container select {
+  
+    color:black!important;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.login-container button:hover {
+    background-color: #0056b3;
+}

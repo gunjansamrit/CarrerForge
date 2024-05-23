@@ -16,7 +16,7 @@ const questionSchema = new Schema({
 // Define the uploadQuestion static method
 questionSchema.statics.uploadQuestion = async (req, res, next) => {
   const questionData = req.body;
-  console.log(questionData);
+  
   try {
     const question = await QuestionModel.create({
       jobId: questionData.jobId,
@@ -36,7 +36,7 @@ questionSchema.statics.uploadQuestion = async (req, res, next) => {
 // Define the getAllQuestions static method
 questionSchema.statics.getAllQuestions = async (req, res, next) => {
   const { jobId } = req.body;
-  console.log(jobId);
+ 
 
   try {
     // Find all questions with the given jobId

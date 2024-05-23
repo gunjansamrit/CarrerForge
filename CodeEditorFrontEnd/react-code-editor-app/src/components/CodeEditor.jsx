@@ -5,11 +5,15 @@ import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 import { QuestionContext } from './QuestionContext';
 
-const CodeEditor = () => {
+const CodeEditor = ({setIsAuthenticated}) => {
   const editorRef = useRef();
   const [value, setValue] = useState("");
   const [language, setLanguage] = useState("java");
-  const { showQuestion, questionText, javaCode, cppCode, pythonCode, sampleTestCase, questionId, setQuestionId, codeChanges, setCodeChanges } = useContext(QuestionContext);
+  const { showQuestion, questionText, javaCode, cppCode, pythonCode, sampleTestCase, questionId, setQuestionId, codeChanges, setCodeChanges} = useContext(QuestionContext);
+
+   const studentId=localStorage.getItem("studentId");
+  
+  
 
   const onMount = (editor) => {
     editorRef.current = editor;
@@ -107,6 +111,9 @@ const CodeEditor = () => {
           questionText={questionText}
           sampleTestCase={sampleTestCase}
           questionId={questionId}
+          studentId={studentId}
+          setIsAuthenticated={setIsAuthenticated}
+          
         />
       </HStack>
     </Box>

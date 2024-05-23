@@ -6,19 +6,21 @@ import './Navbar.css';
 const Navbar = () => {
   const { 
     showQuestion, setShowQuestion, 
-    jobId, setJobId, // Include jobId in the useContext
+    // Include jobId in the useContext
     setQuestionText, setJavaCode, 
     setCppCode, setPythonCode, 
     setSampleTestCase ,questionId, setQuestionId,setCodeChanges 
   } = useContext(QuestionContext);
   const [questions, setQuestions] = useState([]); // State to hold the fetched questions
   const [activeIndex, setActiveIndex] = useState(null); // State to store the active button index
+  const jobId=localStorage.getItem("jobId");
+ 
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
         const response = await axios.post("http://localhost:3003/student/getAllQuestions", {
-          jobId: "661c0eee1d9a265158dd5702" // Replace with your actual jobId
+          jobId: jobId // Replace with your actual jobId
         });
 
         if (response.status === 200) {
@@ -47,12 +49,14 @@ const Navbar = () => {
     }
 
     setQuestionId(question._id);
-    setJobId(question.jobId);
+   
     setQuestionText(question.questionText);
     setJavaCode(question.javaCode);
+    
     setCppCode(question.cppCode);
     setPythonCode(question.pythonCode);
     setSampleTestCase(question.sampleTestCase);
+    
 
     // Check if code changes are available for the selected question and language
     
