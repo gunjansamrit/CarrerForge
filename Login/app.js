@@ -13,7 +13,7 @@ const port = 3009;
 app.use(express.json());
 app.use(
   cors({
-    origin: true,
+    origin: "*",
     credentials: true, // Include this if you're using cookies or sessions
   })
 );
