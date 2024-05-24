@@ -35,13 +35,14 @@ const Login = ({ onLogin }) => {
         reqBody
       );
       // const responseData = response.json();
-      console.log(response);
+      // console.log(response);
       if (role == "Student") {
         getUserId(response.data.studentId);
         getRole("student");
         navigate("/studentdashboard", {
           state: { details: response.data.student },
         });
+        localStorage.setItem("role", "student");
       }
       if (role == "Admin") {
         getUserId(response.data.adminId);
@@ -51,9 +52,11 @@ const Login = ({ onLogin }) => {
         getUserId(response.data.companyId);
         getRole("company");
         navigate("/companydashboard");
+        localStorage.setItem("role", "company");
       }
       getUserToken(response.data.token);
       setIsUserLoggedIn(true);
+      localStorage.setItem("login", true);
     } catch (error) {
       console.log(error);
     }

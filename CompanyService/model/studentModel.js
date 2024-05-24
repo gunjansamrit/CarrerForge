@@ -1,6 +1,6 @@
 const { generateToken, verifyToken } = require("../utils/jwtToken"); // Import the generateToken utility function
 const CredentialsModel = require("./credentialsModel");
-const JobModel = require("./jobModel");
+
 const ApplicationModel = require("./applicationModel");
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
@@ -27,6 +27,7 @@ studentSchema.statics.applyForJob = async (req, res, next) => {
 
   try {
     // Check if the job exists
+    const JobModel = require("./jobModel");
     const job = await JobModel.findById(jobId);
     if (!job) {
       return res.status(404).json({ message: "Job not found" });

@@ -7,7 +7,10 @@ export const useLoginRoleContext = () => {
   return useContext(LoginRoleContext);
 };
 export const LoginRoleContextProvider = ({ children }) => {
-  const [who, setWho] = useState(0);
+  const [who, setWho] = useState(() => {
+    const storedData = localStorage.getItem("role");
+    return storedData ? storedData : "";
+  });
 
   const getRole = (role) => {
     setWho(role);

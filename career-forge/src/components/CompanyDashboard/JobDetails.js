@@ -10,7 +10,7 @@ const JobDetails = ({
 }) => (
   <div className="job-details">
     <div className="job-details-header">
-      <h2>{title}</h2>
+      <h2>Job Title</h2>
       <p>{location}</p>
     </div>
     <div className="job-details-skills">
@@ -31,12 +31,12 @@ const JobDetails = ({
     <div className="job-details-actions">
       <button className="job-details-btn">Change CGPA Requirement</button>
       <button className="job-details-btn">Set Coding Test</button>
-      <button
+      {/* <button
         className="job-details-btn"
         onClick={() => handleViewApplicants(applicants)}
       >
         View Applicants
-      </button>
+      </button> */}
     </div>
   </div>
 );

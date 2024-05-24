@@ -111,10 +111,21 @@ const Company = () => {
       job.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleLogout = () => {
+    // Perform logout actions here
+    console.log("Logging out...");
+    // setIsUserLoggedIn(false);
+    // localStorage.setItem("login", false);
+    // localStorage.setItem("role", "");
+  };
+
   return (
     <div className="app">
       <header className="header">
         <h1>Company Dashboard</h1>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
       </header>
       <div className="container">
         <div className="job-postings">

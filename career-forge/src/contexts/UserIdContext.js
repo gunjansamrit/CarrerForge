@@ -22,7 +22,10 @@ export const UserIdContextProvider = ({ children }) => {
     return storedToken ? storedToken : "";
   });
 
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(() => {
+    const booleanVal = localStorage.getItem("login");
+    return booleanVal ? booleanVal : false;
+  });
 
   const getUserToken = (token) => {
     setToken(token);

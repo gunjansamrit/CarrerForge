@@ -6,7 +6,7 @@ const SelectedModel = require("../model/selectedModel");
 const JobModel = require("../model/jobModel");
 
 router.post("/applyForJob", StudentModel.applyForJob);
-router.get(
+router.post(
   "/findAllApplicationsWithJobDetails",
   ApplicationModel.findAllApplicationsWithJobDetails
 );
