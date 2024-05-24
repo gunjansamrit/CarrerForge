@@ -1,13 +1,41 @@
-version: '3.2'
+version: '3.3'
+
 services:
-  frontend:
-    image: "sumith783/career-forge-frontend:latest"
-    container_name: career-forge-frontend
+  login-backend:
+    image: sumith783/career-forge-login:latest
+    container_name: login-backend
+    environment:
+      - NODE_ENV=production
+      - PORT=3009
     ports:
-      - "80:3000"
+      - "3009:3009"
     networks:
-      - frontend-nw
+      - app-network
+
+  login-frontend:
+    image: sumith783/career-forge-frontend:latest
+    container_name: login-frontend
+    environment:
+      - REACT_APP_BACKEND_URL=http://login-backend:3009
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+  company-service:
+    image: sumith783/career-forge-company:latest
+    container_name: company-service
+    ports:
+      - "3002:3002"
+    networks:
+      - app-network
+  admin-service:
+    image: sumith783/career-forge-admin:latest
+    container_name: login-frontend
+    ports:
+      - "3001:3001"
+    networks:
+      - app-network
 
 networks:
-  frontend-nw:
+  app-network:
     driver: bridge
