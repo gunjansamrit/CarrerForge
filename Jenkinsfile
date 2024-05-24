@@ -120,6 +120,12 @@ pipeline {
                 script {
                     // Stop and remove existing containers
                     sh 'docker-compose -f docker-compose.yaml down'
+                    sh '''
+                        docker rm -f login-backend || true
+                        docker rm -f login-frontend || true
+                        docker rm -f company-service || true
+                        docker rm -f admin-service || true
+                    '''
                 }
             }
         }
