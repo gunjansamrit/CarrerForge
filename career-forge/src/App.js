@@ -11,6 +11,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import UploadQuestion from "./components/uploadQuestion/UploadQuestion";
 const App = () => {
   const { isUserLoggedIn } = useUserIdContext();
   const { who } = useLoginRoleContext();
@@ -54,6 +55,7 @@ const App = () => {
               }
             /> */}
             <Route path="/companydashboard" element={<Company />} />
+            <Route path="/uploadquestion" element={<UploadQuestion />} />
             {/* <Route path="/admindashboard" element={<PatientDashboard />} /> */}
           </>
         )}
