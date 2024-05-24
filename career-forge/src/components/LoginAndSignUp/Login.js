@@ -3,12 +3,18 @@ import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import "./Login.css";
 import axios from "axios";
+import { useLoginRoleContext } from "../../contexts/LoginRoleContext";
+import { useUserIdContext } from "../../contexts/UserIdContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ onLogin }) => {
   //   const navigate = useNavigate(); // Initialize useNavigate
   const [role, setRole] = useState("Student");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { getUserId, getUserToken, setIsUserLoggedIn } = useUserIdContext();
+  const { getRole } = useLoginRoleContext();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,6 +36,24 @@ const Login = ({ onLogin }) => {
       );
       // const responseData = response.json();
       console.log(response);
+      if (role == "Student") {
+        getUserId(response.data.studentId);
+        getRole("student");
+        navigate("/studentdashboard", {
+          state: { details: response.data.student },
+        });
+      }
+      if (role == "Admin") {
+        getUserId(response.data.adminId);
+        getRole("admin");
+      }
+      if (role == "Company") {
+        getUserId(response.data.companyId);
+        getRole("company");
+        navigate("/companydashboard");
+      }
+      getUserToken(response.data.token);
+      setIsUserLoggedIn(true);
     } catch (error) {
       console.log(error);
     }

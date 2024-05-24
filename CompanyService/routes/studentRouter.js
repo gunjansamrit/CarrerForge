@@ -1,9 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const StudentModel = require("../models/studentModel");
-const ApplicationModel = require("../models/applicationModel");
+const StudentModel = require("../model/studentModel");
+const ApplicationModel = require("../model/applicationModel");
+const SelectedModel = require("../model/selectedModel");
+const JobModel = require("../model/jobModel");
 
-router.post('/applyForJob', StudentModel.applyForJob);
-router.get('/findAllApplicationsWithJobDetails', ApplicationModel.findAllApplicationsWithJobDetails);
+router.post("/applyForJob", StudentModel.applyForJob);
+router.get(
+  "/findAllApplicationsWithJobDetails",
+  ApplicationModel.findAllApplicationsWithJobDetails
+);
+router.post("/getSelectedCompany", SelectedModel.getSelectedCompany);
+router.get("/getAllJobs", JobModel.getAllJobs);
 
 module.exports = router; // Corrected export statement

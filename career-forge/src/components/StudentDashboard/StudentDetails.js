@@ -7,10 +7,16 @@ const StudentDetails = ({
 }) => (
   <div className="profile-card">
     <div className="profile-header">
-      <img src={student.profileImage} alt="Profile" className="profile-image" />
+      <img src={student.profileImage} className="profile-image" />
       <div>
-        <h3>{student.name}</h3>
-        <p>{student.degree}</p>
+        <h3>
+          {student.name.firstName +
+            " " +
+            student.name.middleName +
+            " " +
+            student.name.lastName}
+        </h3>
+        <p>{student.highestEducation}</p>
       </div>
       <button className="edit-btn" onClick={handleEditProfile}>
         <img src={editIcon} alt="Edit" className="edit-icon" />
@@ -21,9 +27,9 @@ const StudentDetails = ({
         <p>
           <strong>Email:</strong> {student.email}
         </p>
-        <p>
+        {/* <p>
           <strong>Skills:</strong> {student.skills.join(", ")}
-        </p>
+        </p> */}
       </div>
     ) : (
       <div className="profile-edit">

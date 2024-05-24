@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./StudentDashboard.css";
 import StudentDetails from "./StudentDetails";
 import JobListing from "./JobListings";
 import searchIcon from "../../resources/icons/search-icon.svg";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 const Student = () => {
+  const location = useLocation();
   const [student, setStudent] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
@@ -12,30 +15,53 @@ const Student = () => {
     profileImage: "https://via.placeholder.com/150",
     isEditMode: false,
   });
-
-  const [jobListings, setJobListings] = useState([
-    {
-      id: 1,
-      title: "Software Engineer",
-      company: "ABC Tech",
-      location: "San Francisco, CA",
-    },
-    {
-      id: 2,
-      title: "Front-End Developer",
-      company: "XYZ Corp",
-      location: "New York, NY",
-    },
-    {
-      id: 3,
-      title: "Full-Stack Developer",
-      company: "Acme Inc.",
-      location: "Seattle, WA",
-    },
-  ]);
+  const { details } = location.state || {};
+  const [jobListings, setJobListings] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [newSkill, setNewSkill] = useState("");
+
+  const updateJobList = async (data) => {
+    await setJobListings(data);
+  };
+  useEffect(() => {
+    const fetchJobs = async () => {
+      // console.log(details);
+      try {
+        const response = await axios.get(
+          "http://localhost:3002/student/getAllJobs"
+        );
+        // console.log(response.data[0].companyId.companyName);
+        // setJobListings(response.data);
+        await updateJobList(response.data);
+        // console.log(jobListings);
+      } catch (error) {
+        console.log(error);
+        // setJobListings([
+        //   {
+        //     id: 1,
+        //     title: "Software Engineer",
+        //     company: "ABC Tech",
+        //     location: "San Francisco, CA",
+        //   },
+        //   {
+        //     id: 2,
+        //     title: "Front-End Developer",
+        //     company: "XYZ Corp",
+        //     location: "New York, NY",
+        //   },
+        //   {
+        //     id: 3,
+        //     title: "Full-Stack Developer",
+        //     company: "Acme Inc.",
+        //     location: "Seattle, WA",
+        //   },
+        // ]);
+      }
+    };
+    fetchJobs();
+    // console.log(jobListings);
+  }, []);
 
   const handleApply = (jobId) => {
     console.log(`Applying for job ${jobId}`);
@@ -65,10 +91,14 @@ const Student = () => {
     }
   };
 
-  const filteredJobListings = jobListings.filter(
+  let filteredJobListings = [];
+  filteredJobListings = jobListings.filter(
     (job) =>
-      job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.company.toLowerCase().includes(searchTerm.toLowerCase())
+      job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (job.companyId &&
+        job.companyId.companyName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()))
   );
 
   return (
@@ -79,7 +109,7 @@ const Student = () => {
       <div className="container">
         <div className="profile">
           <StudentDetails
-            student={student}
+            student={details}
             handleEditProfile={handleEditProfile}
             handleProfileChange={handleProfileChange}
           />
@@ -106,15 +136,18 @@ const Student = () => {
             />
           </div>
           <h2>Job Listings</h2>
-          {filteredJobListings.map((job) => (
-            <JobListing
-              key={job.id}
-              title={job.title}
-              company={job.company}
-              location={job.location}
-              applyHandler={() => handleApply(job.id)}
-            />
-          ))}
+          {jobListings.length != 0 &&
+            filteredJobListings.length != 0 &&
+            filteredJobListings.map((job) => (
+              <JobListing
+                // key={job.id}
+                // title={job.title}
+                // company={job.companyId.comapnyName}
+                // location={job.location}
+                job={job}
+                applyHandler={() => handleApply(job.id)}
+              />
+            ))}
         </div>
       </div>
     </div>

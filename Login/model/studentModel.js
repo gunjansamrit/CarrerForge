@@ -1,30 +1,37 @@
-const { generateToken,verifyToken } = require('../utils/jwtToken'); // Import the generateToken utility function
-const { generatePasswordHash, verifyPassword } = require('../utils/passwordHash'); // Import the verifyPassword utility function
-const CredentialsModel = require('./ credentialsModel');
-const mongoose = require('mongoose');
+const { generateToken, verifyToken } = require("../utils/jwtToken"); // Import the generateToken utility function
+const {
+  generatePasswordHash,
+  verifyPassword,
+} = require("../utils/passwordHash"); // Import the verifyPassword utility function
+const CredentialsModel = require("./ credentialsModel");
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const studentSchema = new Schema({
   name: {
     firstName: { type: String, required: true },
     middleName: String,
-    lastName: { type: String, required: true }
+    lastName: { type: String, required: true },
   },
   email: { type: String, required: true, unique: true },
   contactNumber: String,
   cgpa: Number,
   highestEducation: String,
-  credentials: { type: Schema.Types.ObjectId, ref: 'Credentials', required: true }
+  credentials: {
+    type: Schema.Types.ObjectId,
+    ref: "Credentials",
+    required: true,
+  },
 });
 
 // Signup method
 studentSchema.statics.signup = async (req, res, next) => {
   const studentData = req.body;
-  const hashpwd=await generatePasswordHash(req.body.password)
+  const hashpwd = await generatePasswordHash(req.body.password);
   const credentialsData = {
     username: req.body.username,
     password: hashpwd, // Hash the password
-    role: req.body.role
+    role: req.body.role,
   };
 
   try {
@@ -48,33 +55,37 @@ studentSchema.statics.login = async (req, res, next) => {
   try {
     const credentials = await CredentialsModel.findOne({ username, role }); // Find credentials by username and role
     if (!credentials) {
-      throw new Error('Invalid User Name');
+      throw new Error("Invalid User Name");
     }
-
-    
 
     const isMatch = await verifyPassword(password, credentials.password); // Verify the password
     if (!isMatch) {
-      throw new Error('Invalid Password');
+      throw new Error("Invalid Password");
     }
 
     // Generate JWT token
-    const token = generateToken({ userId: credentials._id , role:credentials.role });
+    const token = generateToken({
+      userId: credentials._id,
+      role: credentials.role,
+    });
 
-    const cred=credentials._id ;
+    const cred = credentials._id;
 
-    const student = await StudentModel.findOne({ credentials: credentials._id });
+    const student = await StudentModel.findOne({
+      credentials: credentials._id,
+    });
     if (!student) {
-      throw new Error('Student not found');
+      throw new Error("Student not found");
     }
 
-    res.status(200).json({ token, studentId: student._id });
+    // res.status(200).json({ token, studentId: student._id });
+    res.status(200).json({ token, studentId: student._id, student });
   } catch (error) {
     console.log(error);
     res.status(401).send("Invalid credentials");
   }
 };
 
-const StudentModel = mongoose.model('Student', studentSchema);
+const StudentModel = mongoose.model("Student", studentSchema);
 
 module.exports = StudentModel;

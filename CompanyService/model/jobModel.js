@@ -18,6 +18,17 @@ const jobSchema = new Schema({
 
 });
 
+
+jobSchema.statics.getAllJobs = async function (req, res, next) {
+  try {
+    const jobs = await JobModel.find().populate('companyId', 'companyName');
+    res.status(200).send(jobs);
+  } catch (error) {
+    console.error('Error fetching jobs:', error);
+    res.status(500).send("Error while fetching jobs");
+  }
+};
+
 jobSchema.statics.updateCgpaReq = async function (req, res, next) {
   const { jobId, cgpaReq } = req.body;
 

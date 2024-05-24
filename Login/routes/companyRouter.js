@@ -1,9 +1,7 @@
-const express =require("express");
-const router =express.Router();
-const companyModel=require("../model/companyModel")
+const express = require("express");
+const router = express.Router();
+const companyModel = require("../model/companyModel");
 
+router.post("/login", companyModel.login);
 
-router.get('/login',companyModel.login);
-
-
-module.exports=router;
+module.exports = router;
