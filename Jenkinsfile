@@ -119,7 +119,7 @@ pipeline {
             steps {
                 script {
                     // Stop and remove existing containers
-                    sh 'docker-compose -f docker-compose.yml down'
+                    sh 'docker-compose -f docker-compose.yaml down'
                 }
             }
         }
