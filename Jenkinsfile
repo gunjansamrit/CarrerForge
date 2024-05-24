@@ -115,6 +115,14 @@ pipeline {
                 }
             }
         }
+        stage('Cleanup') {
+            steps {
+                script {
+                    // Stop and remove existing containers
+                    sh 'docker-compose -f docker-compose.yml down'
+                }
+            }
+        }
         stage('Deploy with Docker Compose') {
             steps {
                 script {
