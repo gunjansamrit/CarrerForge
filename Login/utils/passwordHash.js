@@ -1,10 +1,10 @@
-// const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
-// const { hash, compare, genSalt } = bcrypt;
+const { hash, compare, genSalt } = bcrypt;
 
 const generatePasswordHash = async (password) => {
-  // const salt = await genSalt();
-  // const hashPwd = await hash(password, salt);
+  const salt = await genSalt();
+  const hashPwd = await hash(password, salt);
   return password;
 };
 
