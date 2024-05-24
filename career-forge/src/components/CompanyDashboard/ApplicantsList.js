@@ -19,7 +19,13 @@ const ApplicantList = ({
             }`}
           >
             <div className="applicant-info">
-              <p>{applicant.name}</p>
+              <p>
+                {applicant.name.firstName +
+                  " " +
+                  applicant.name.middleName +
+                  " " +
+                  applicant.name.lastName}
+              </p>
               <p>{applicant.degree}</p>
             </div>
           </li>

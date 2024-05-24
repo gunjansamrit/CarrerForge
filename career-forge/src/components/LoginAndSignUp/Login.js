@@ -34,8 +34,7 @@ const Login = ({ onLogin }) => {
         // `${process.env.REACT_APP_BACKEND_URL}/${roleUrl}/login`,
         reqBody
       );
-      // const responseData = response.json();
-      // console.log(response);
+      console.log(response);
       if (role == "Student") {
         getUserId(response.data.studentId);
         getRole("student");
@@ -51,7 +50,9 @@ const Login = ({ onLogin }) => {
       if (role == "Company") {
         getUserId(response.data.companyId);
         getRole("company");
-        navigate("/companydashboard");
+        navigate("/companydashboard", {
+          state: { details: response.data.company },
+        });
         localStorage.setItem("role", "company");
       }
       getUserToken(response.data.token);

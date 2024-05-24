@@ -11,6 +11,7 @@ router.post("/createJob", CompanyModel.createJob);
 router.post("/getAllJobsByCompanyId", CompanyModel.getAllJobsByCompanyId);
 router.post("/publishEligible", JobModel.publishEligible);
 router.post("/updateCgpaReq", JobModel.updateCgpaReq);
+router.post("/getAllApplicants", JobModel.getAllApplicants);
 
 router.post("/uploadQuestion", QuestionModel.uploadQuestion);
 router.post("/getTopScorer", TestScoreModel.getTopScorer);
