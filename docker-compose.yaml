@@ -30,7 +30,7 @@ services:
       - app-network
   admin-service:
     image: sumith783/career-forge-admin:latest
-    container_name: login-frontend
+    container_name: admin-service
     ports:
       - "3001:3001"
     networks:
