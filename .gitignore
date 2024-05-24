@@ -1,3 +1,6 @@
 node_modules/
 gitToken
-# /Login/node_modules
+/Login/node_modules
+/AdminService/node_modules
+/CompanyService/node_modules
+/CodingTestService/node_modules
