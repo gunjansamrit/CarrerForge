@@ -17,6 +17,8 @@ services:
     container_name: login-frontend
     environment:
       - REACT_APP_BACKEND_URL=http://login-backend:3009
+      - NODE_ENV=production
+      - PORT=3000
     ports:
       - "3000:3000"
     networks:
@@ -24,6 +26,10 @@ services:
   company-service:
     image: sumith783/career-forge-company:latest
     container_name: company-service
+    environment:
+      - REACT_APP_BACKEND_URL=http://login-backend:3009
+      - NODE_ENV=production
+      - PORT=3002
     ports:
       - "3002:3002"
     networks:
