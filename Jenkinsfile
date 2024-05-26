@@ -70,6 +70,9 @@ pipeline {
                         docker rm -f login-frontend || true
                         docker rm -f company-service || true
                         docker rm -f admin-service || true
+                        docker rm -f elastic || true
+                        docker rm -f kibana || true
+                        docker rm -f logstash || true
                     '''
                 }
             }
