@@ -119,7 +119,7 @@ pipeline {
             steps {
                 script {
                     // Start all services using Docker Compose
-                   sh 'docker-compose -f CarrerForge/docker-compose.yaml down'
+                   sh 'docker-compose -f CarrerForge/docker-compose.yaml up -d'
 
                 }
             }
