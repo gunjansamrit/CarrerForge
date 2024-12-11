@@ -84,7 +84,7 @@ services:
       options:
         syslog-address: "tcp://localhost:5044"
   admin-service:
-    image: gsamrit/career-forge-admin:latest
+    image: gsamrit/career-forge-adminsevice:latest
     container_name: admin-service
     ports:
       - "3001:3001"
