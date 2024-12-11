@@ -39,7 +39,7 @@ services:
       - "NODE_OPTIONS=--max-old-space-size=256"
 
   login-backend:
-    image: sumith783/career-forge-login:latest
+    image: gsamrit/career-forge-login:latest
     container_name: login-backend
     environment:
       - NODE_ENV=production
@@ -54,7 +54,7 @@ services:
         syslog-address: "tcp://localhost:5044"
 
   login-frontend:
-    image: sumith783/career-forge-frontend:latest
+    image: gsamrit/career-forge-frontend:latest
     container_name: login-frontend
     environment:
       - REACT_APP_BACKEND_URL=http://login-backend:3009
@@ -69,7 +69,7 @@ services:
       options:
         syslog-address: "tcp://localhost:5044"
   company-service:
-    image: sumith783/career-forge-company:latest
+    image: gsamrit/career-forge-company:latest
     container_name: company-service
     environment:
       - REACT_APP_BACKEND_URL=http://login-backend:3009
@@ -84,7 +84,7 @@ services:
       options:
         syslog-address: "tcp://localhost:5044"
   admin-service:
-    image: sumith783/career-forge-admin:latest
+    image: gsamrit/career-forge-admin:latest
     container_name: admin-service
     ports:
       - "3001:3001"
