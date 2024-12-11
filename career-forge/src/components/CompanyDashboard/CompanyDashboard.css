@@ -482,3 +482,11 @@
 .logout-button:hover {
   background-color: #e53935;
 }
+
+.scrollable {
+  max-height: 500px; /* Set the height limit for scrolling */
+  overflow-y: auto;  /* Enable vertical scrolling */
+  padding: 10px;     /* Optional padding */
+  border: 1px solid #ccc; /* Optional border for better visibility */
+}
+
