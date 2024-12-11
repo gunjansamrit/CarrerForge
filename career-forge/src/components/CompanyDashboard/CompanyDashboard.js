@@ -146,6 +146,7 @@ const Company = () => {
               Add Job
             </button>
           </div>
+   <div className="scrollable">
           {filteredJobPostings.map((job) => (
             <JobPosting
               job={job}
@@ -153,6 +154,7 @@ const Company = () => {
               handleViewJobDetails={handleViewJobDetails}
             />
           ))}
+  </div>
         </div>
         <div className="job-details-view">
           {selectedJobApplicants.length > 0 ? (
