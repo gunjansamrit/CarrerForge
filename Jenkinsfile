@@ -11,55 +11,92 @@ pipeline {
         APP_NAME = 'career-forge'
         PUSH_TO_DOCKER_HUB = 'true'
         DOCKER_COMPOSE_CONFIG = 'default'
-        DOCKER_IMAGE_PREFIX = 'sumith783/career-forge'
+        DOCKER_IMAGE_PREFIX = 'gsamrit/career-forge'
     }
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'master', url: 'https://github.com/Sumith1908/CarrerForge.git'
+                script {
+                    // Clean existing directory and clone the repository
+                    sh 'rm -rf CarrerForge' // Remove existing directory
+                    sh 'git clone https://github.com/gunjansamrit/CarrerForge.git'
+                }
             }
         }
+
         stage('Run Tests (Backend)') {
             steps {
                 script {
+                    // Check if directories exist and run tests for each microservice
                     for (microservice in microservices) {
-                        dir("${microservice}") {
-                            echo "${microservice}"
+                        def microserviceDir = "CarrerForge/${microservice}"
+                        if (fileExists(microserviceDir)) {
+                            dir(microserviceDir) {
+                                echo "Running tests for ${microservice}..."
+                                // Add test commands, e.g., sh 'npm test' or './run-tests.sh'
+                            }
+                        } else {
+                            echo "Directory for ${microservice} not found. Skipping tests for this microservice."
                         }
                     }
                 }
             }
         }
-        
+
         stage('Build Docker Images') {
             steps {
                 script {
-                    docker.build("login", "Login")
-                    docker.build("admin", "AdminService")
-                    docker.build("company", "CompanyService")
-                    docker.build('frontend', 'career-forge')
+                    // Dynamically build Docker images for each microservice
+                    for (microservice in microservices) {
+                        def imageTag = microservice.toLowerCase()
+                        def microserviceDir = "CarrerForge/${microservice}"
+                        if (fileExists(microserviceDir)) {
+                            sh "docker build -t ${imageTag} ${microserviceDir}"
+                        } else {
+                            echo "Skipping Docker build for ${microservice} as the directory is missing."
+                        }
+                    }
+
+                    // Build frontend Docker image
+                    if (fileExists('CarrerForge/career-forge')) {
+                        sh 'docker build -t frontend CarrerForge/career-forge'
+                    } else {
+                        echo "Frontend directory not found. Skipping frontend Docker build."
+                    }
                 }
             }
         }
+
         stage('Push Images to Docker Hub') {
             steps {
                 script {
                     if (env.PUSH_TO_DOCKER_HUB == 'true') {
-                        // sh "docker login -u your-username -p \$DOCKER_PASSWORD"
-                        docker.withRegistry('', 'DockerHubCred') {
-                            sh "docker tag login ${env.DOCKER_IMAGE_PREFIX}-login:latest"
-                            sh "docker push ${env.DOCKER_IMAGE_PREFIX}-login:latest"
-                            sh "docker tag company ${env.DOCKER_IMAGE_PREFIX}-company:latest"
-                            sh "docker push ${env.DOCKER_IMAGE_PREFIX}-company:latest"
-                            sh "docker tag admin ${env.DOCKER_IMAGE_PREFIX}-admin:latest"
-                            sh "docker push ${env.DOCKER_IMAGE_PREFIX}-admin:latest"
-                            sh "docker tag frontend ${env.DOCKER_IMAGE_PREFIX}-frontend:latest"
-                            sh "docker push ${env.DOCKER_IMAGE_PREFIX}-frontend:latest"
+                        // Secure login to Docker Hub using Jenkins credentials
+                        withCredentials([usernamePassword(credentialsId: 'DockerCredentialId', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                            sh """
+                                echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+                            """
                         }
+
+                        // Push images for each microservice to Docker Hub
+                        for (microservice in microservices) {
+                            def imageTag = microservice.toLowerCase()
+                            sh """
+                                docker tag ${imageTag} ${DOCKER_IMAGE_PREFIX}-${imageTag}:latest
+                                docker push ${DOCKER_IMAGE_PREFIX}-${imageTag}:latest
+                            """
+                        }
+
+                        // Push frontend image
+                        sh """
+                            docker tag frontend ${DOCKER_IMAGE_PREFIX}-frontend:latest
+                            docker push ${DOCKER_IMAGE_PREFIX}-frontend:latest
+                        """
                     }
                 }
             }
         }
+
         stage('Cleanup') {
             steps {
                 script {
@@ -77,12 +114,13 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy with Docker Compose') {
             steps {
                 script {
-                    // sh 'docker-compose pull'
-                    // sh 'docker-compose up -d'  # Start all services in docker-compose.yml
-                    sh "docker-compose up -d" 
+                    // Start all services using Docker Compose
+                   sh 'docker-compose -f CarrerForge/docker-compose.yaml down'
+
                 }
             }
         }
