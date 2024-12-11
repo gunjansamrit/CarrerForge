@@ -1,43 +1,6 @@
 version: '3.3'
 
 services:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3
-    container_name: elastic
-    environment:
-      - discovery.type=single-node
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
-    ports:
-      - 9200:9200
-    networks:
-      - app-network
-      
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:7.17.3
-    container_name: logstash
-    volumes:
-      - ./logstash/config:/usr/share/logstash/pipeline
-    ports:
-      - 5044:5044
-    networks:
-      - app-network
-    environment:
-      - "LS_JAVA_OPTS=-Xms256m -Xmx256m"
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.17.3
-    container_name: kibana
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
-    networks:
-      - app-network
-    environment:
-      - "NODE_OPTIONS=--max-old-space-size=256"
-
   login-backend:
     image: gsamrit/career-forge-login:latest
     container_name: login-backend
@@ -68,6 +31,7 @@ services:
       driver: syslog
       options:
         syslog-address: "tcp://localhost:5044"
+  
   company-service:
     image: gsamrit/career-forge-companyservice:latest
     container_name: company-service
@@ -83,6 +47,7 @@ services:
       driver: syslog
       options:
         syslog-address: "tcp://localhost:5044"
+  
   admin-service:
     image: gsamrit/career-forge-adminservice:latest
     container_name: admin-service
