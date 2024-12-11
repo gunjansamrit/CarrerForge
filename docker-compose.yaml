@@ -11,10 +11,6 @@ services:
       - "3009:3009"
     networks:
       - app-network
-    logging:
-      driver: syslog
-      options:
-        syslog-address: "tcp://localhost:5044"
 
   login-frontend:
     image: gsamrit/career-forge-frontend:latest
@@ -27,11 +23,7 @@ services:
       - "3000:3000"
     networks:
       - app-network
-    logging:
-      driver: syslog
-      options:
-        syslog-address: "tcp://localhost:5044"
-  
+
   company-service:
     image: gsamrit/career-forge-companyservice:latest
     container_name: company-service
@@ -43,11 +35,7 @@ services:
       - "3002:3002"
     networks:
       - app-network
-    logging:
-      driver: syslog
-      options:
-        syslog-address: "tcp://localhost:5044"
-  
+
   admin-service:
     image: gsamrit/career-forge-adminservice:latest
     container_name: admin-service
@@ -55,10 +43,6 @@ services:
       - "3001:3001"
     networks:
       - app-network
-    logging:
-      driver: syslog
-      options:
-        syslog-address: "tcp://localhost:5044"
 
 networks:
   app-network:
